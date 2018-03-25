@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #coding:utf-8
 import modules.get_weather as get_weather
 import os,time,cgi,hashlib
