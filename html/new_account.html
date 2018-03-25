@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加新的账号信息</title>
+    <link rel="stylesheet" type="text/css" href="../css/alpha.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+</head>
+<body>
+<div class="main">
+<p align="center" ><img src="../images/etlucency.png" class="alien" ></p>
+    <form action="../cgi-bin/new_account.py" mothod="" align="center">
+       <!--align='center'-->
+        <table align="center">
+             <tr>
+                 <td>Application:</td>
+                 <td><input type="text" name="app"></td>
+             </tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+            <tr>
+                <td>Comment:</td>
+                <td><textarea name="comment"> </textarea></td>
+            </tr>
+        </table>
+
+        <input type="submit" value="commit" class="green_btn"  >
+    </form>
+</div>
+</body>
+</html>
