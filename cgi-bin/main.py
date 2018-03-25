@@ -2,6 +2,9 @@
 #coding:utf-8
 import modules.get_weather as get_weather
 import os,time,cgi,hashlib
+import sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
 indexDick={}
 def md5(alpha):
     return hashlib.md5(alpha.encode('utf-8')).hexdigest()
