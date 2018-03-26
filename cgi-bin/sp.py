@@ -10,8 +10,13 @@ sp={}
 sp['port']=data.getvalue('port')
 sp['ip']=data.getvalue('ip')
 sp['prot']=data.getvalue('prot')
-if sp['port'] and sp['ip'] and sp['prot']:
-    pass
+sp['password']=data.getvalue('password')
+if sp['port'] and sp['ip'] and sp['prot'] and sp['password']:
+    if sp['password'] == 'sophiroth':
+        pass
+    else:
+        print('wrong password, please ensure you have permission to access this api.')
+        exit(1)
 else:
     print('you should specify key and value.')
     exit()
