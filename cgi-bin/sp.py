@@ -2,7 +2,7 @@
 #coding:utf-8
 import cgi,os,subprocess,re
 
-data=cgi.FieldStorage
+data=cgi.FieldStorage()
 sp={}
 sp['port']=data.getvalue('port')
 sp['ip']=data.getvalue('ip')
