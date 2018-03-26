@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # _*_ coding:utf-8 _*_
 import urllib.request
 from lxml import etree
