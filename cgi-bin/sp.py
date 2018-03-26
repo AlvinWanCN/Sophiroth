@@ -14,13 +14,11 @@ iptablesInsert='sudo iptables -I INPUT -p {prot} --dport {port} -s {ip} -j ACCEP
 grepNumResult=subprocess.getoutput(iptablesGrepNum)
 grepResult=subprocess.getoutput(iptablesGrep).split('\n')
 
-if grepNumResult != 0:
-    for i in grepResult:
-        sp['num']=re.findall(r'(\d+)\s+ACCEPT',i)[0]
-        try:
-            subprocess.call('sudo iptables -D INPUT {num}'.format_map(sp),shell=True)
-        except:
-            pass
+while subprocess.getoutput(iptablesGrepNum) != 0:
+    grepResult = subprocess.getoutput(iptablesGrep).split('\n')[0]
+    sp['num'] = re.findall(r'(\d+)\s+ACCEPT', grepResult)[0]
+    subprocess.call('sudo iptables -D INPUT {num}'.format_map(sp), shell=True)
+
 try:
     result = subprocess.call(iptablesInsert,shell=True)
 except Exception as e:
