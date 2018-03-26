@@ -7,8 +7,8 @@ sp={}
 sp['port']=data.getvalue('port')
 sp['ip']=data.getvalue('ip')
 sp['prot']=data.getvalue('prot')
-iptablesGrepNum='sudo iptables -L -n --line-number|grep {ip}|grep {port}|grep {prot}|wc -l'.format_map(sp)
-iptablesGrep='sudo iptables -L -n --line-number|grep {ip}|grep {port}|grep {prot}'.format_map(sp)
+iptablesGrepNum='sudo iptables -L INPUT -n --line-number|grep {ip}|grep {port}|grep {prot}|wc -l'.format_map(sp)
+iptablesGrep='sudo iptables -L INPUT -n --line-number|grep {ip}|grep {port}|grep {prot}'.format_map(sp)
 iptablesInsert='sudo iptables -I INPUT -p {prot} --dport {port} -s {ip} -j ACCEPT'.format_map(sp)
 
 grepNumResult=subprocess.getoutput(iptablesGrepNum)
