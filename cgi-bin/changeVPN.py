@@ -8,7 +8,7 @@ from modules.md5 import md5
 print("Content-type:text/html")
 print()
 
-data=cgi.FieldStorage
+data=cgi.FieldStorage()
 cv={}
 cv['type']=data.getvalue('type')
 cv['password']=md5(data.getvalue('password'))
