@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>用户登录</title>
+    <link rel="stylesheet" type="text/css" href="/CarAppStore/css/login/style.css" />
+    <link rel="stylesheet" type="text/css" href="/CarAppStore/css/login/body.css"/>
+
+    <script type="text/javascript" src="/CarAppStore/js/jquery/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="/CarAppStore/js/jquery/jquery-form.js"></script>
+    <script type="text/javascript" src="/CarAppStore/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="/CarAppStore/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script type="text/javascript" src="/resource/rcs/safe/md5.js"></script>
+    <script type="text/javascript">
+     $(document).ready(function() {
+           var url="manage/updater.shtml";
+           var baseRef = window.location.href;
+           var aa = baseRef.indexOf("=");
+           if(0 < aa)  {
+               url=baseRef.substring(aa+1);
+           }
+           //ajax submit.
+           $("#formLogin").submit(function()  {
+              var tmp = hex_md5($("#password").val());
+              $("#txt_passwd").val(tmp);
+              $(this).ajaxSubmit({
+                  success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
+                      var obj = eval("("+data+")");
+                      if(obj.result=="ok")  {
+                         window.location.assign(url);
+                      }
+                      else {
+                         $.noty.consumeAlert({layout: 'top', type: 'error', dismissQueue: true,timeout:2000});
+                         alert("登录失败,请重试!");
+                      }
+                  }
+              });
+              return false;
+           });
+     });
+    </script>
+</head>
+<body>
+<div class="container">
+    <section id="content">
+        <form id="formLogin" name="formLogin" action="userLogin.shtml" method="post" target="fmResult">
+            <h1>用户登录</h1>
+            <div>
+                <input type="text" placeholder="用户名" required="" id="username" name="account"/>
+            </div>
+            <div>
+                <input type="password" placeholder="密码" required="" id="password" name="password"/>
+            </div>
+            <div class="">
+                <span class="help-block u-errormessage" id="js-server-helpinfo"> </span>
+            </div>
+            <div>
+                <input type="submit" value="登录" class="btn btn-primary" id="js-btn-login" style="float: left;"/>
+                <input type="reset" value="重置" class="btn btn-primary" id="js-btn-login" style="float: right;"/>
+            </div>
+            <div>
+               <input type="hidden" id="txt_passwd" name="passwd"/>
+            </div>
+        </form>
+    </section><!-- content -->
+    <div>
+       <iframe width="1px" height="1px" name="fmResult" style="display: none;"></iframe>
+    </div>
+</div>
+<!-- container -->
+</body>
+</html>
