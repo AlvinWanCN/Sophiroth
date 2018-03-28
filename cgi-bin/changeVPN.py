@@ -20,7 +20,7 @@ else:
     print('you should specify key and value.')
     exit(1)
 
-if cv['type'] not in ('ikv2','l2tp'):
+if cv['type'] not in ('ikev2','l2tp'):
     print('wrong vpn type, just support both of ikev2 and ipsec')
     exit(1)
 
