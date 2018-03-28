@@ -24,10 +24,10 @@ if cv['type'] not in ('ikev2','ipsec'):
     print('wrong vpn type, just support both of ikev2 and ipsec')
     exit(1)
 
-if cv['type'] == 'l2tp':
+if cv['type'] == 'ipsec':
     subprocess.call('sudo docker stop ikev2-vpn-server',shell=True)
     subprocess.call('sudo docker start ipsec-vpn-server',shell=True)
-    print('l2tp vpn startup')
+    print('ipsec vpn startup')
 else:
     subprocess.call('sudo docker stop ipsec-vpn-server',shell=True)
     subprocess.call('sudo docker start ikev2-vpn-server', shell=True)
