@@ -2,6 +2,13 @@
 # _*_ coding:utf-8 _*_
 import urllib.request,re,time,json,os
 from  bs4 import BeautifulSoup as BS
+from modules.fundDB import useDB
+udb=useDB()
+lastdata=udb.queryDB('select value,percent,date from fund_tab ORDER by id desc limit 1')[0]
+lastValue=lastdata[0]
+lastPercent=lastdata[1]
+lastDate=lastdata[2].strftime('%Y-%m-%d %H:%M:%S')
+state={"lastValue":lastValue,"lastPercent":lastPercent,"lastDate":lastDate}
 dirname=os.getcwd()
 try:
     from modules.get_access_ip import getip
@@ -34,14 +41,16 @@ thdict['latestValue'] =html.xpath('/html/body/li/span[1]')[0].text #获取xpath�
 thdict['latestBenefit']= html.xpath('/html/body/li/span[2]')[0].text #这里我们找的是列表里的text，除了text外，如果需要还可以获取tag和attrib
 thdict['latestPercent']=html.xpath('/html/body/li/span[3]')[0].text
 thdict['Nowtime']=time.strftime('%Y-%m-%d %H:%M:%S')
-thdict['date']=re.sub(r'\s','%20',time.strftime('%Y-%m-%d %H:%M:%S'))
+#thdict['date']=re.sub(r'\s','%20',time.strftime('%Y-%m-%d %H:%M:%S'))
+thdict['date']=time.strftime('%Y-%m-%d %H:%M:%S')
 thdict['earnings'] = '%.2f' % float(float(thdict['latestValue'])*totalFund-totalMoney)
 thdict['todayEarnings']='%.2f' % float(totalFund*float(thdict['latestBenefit']))
 thdict['insertUrl']='http://47.75.0.56/cgi-bin/insertFund.py'
 thdict['queryUrl']='http://47.75.0.56/cgi-bin/queryFund.py'
-thdict.update(json.loads(urllib.request.urlopen('{queryUrl}'.format_map(thdict)).read().decode('utf-8')))
+thdict.update(state)
 #print (thdict)
-urllib.request.urlopen('{insertUrl}?value={latestValue}&percent={latestPercent}&date={date}'.format_map(thdict))
+#urllib.request.urlopen('{insertUrl}?value={latestValue}&percent={latestPercent}&date={date}'.format_map(thdict))
+udb.insertDB(thdict['latestValue'],thdict['latestPercent'],thdict['date'])
 try:
     thdict['access_ip']=access_ip
     thdict['ipinfo']='上次访问IP地址：{access_ip} </br>'.format_map(thdict)
